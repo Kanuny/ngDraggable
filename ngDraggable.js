@@ -85,11 +85,24 @@ angular.module("ngDraggable", [])
                     };
 
                     var isClickableElement = function (evt) {
-                        return (
-                                angular.isDefined(angular.element(evt.target).attr("ng-click"))
-                                || angular.isDefined(angular.element(evt.target).attr("ng-dblclick"))
-                                || angular.isDefined(angular.element(evt.target).attr("ng-cancel-drag"))
-                                );
+                        var isClickable =  angular.isDefined(angular.element(evt.target).attr("ng-click"))
+                            || angular.isDefined(angular.element(evt.target).attr("ng-dblclick"));
+
+                        if (isClickable) {
+                            return true;
+                        }
+                        var currentElement = angular.element(evt.target);
+                        while (currentElement) {
+                            if (angular.isDefined(currentElement.attr("ng-drag"))) {
+                                break;
+                            }
+                            if (angular.isDefined(currentElement.attr("ng-cancel-drag"))) {
+                                isClickable = true;
+                                break;
+                            }
+                            currentElement = currentElement.parent();
+                        }
+                        return isClickable;
                     };
                     /*
                      * When the element is clicked start the drag behaviour
