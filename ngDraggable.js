@@ -308,13 +308,12 @@ angular.module("ngDraggable", [])
                         }
                         if (isTouching(obj.x, obj.y, obj.element)) {
                             // call the ngDraggable ngDragSuccess element callback
-                           if(obj.callback){
+                            if(obj.callback){
                                 obj.callback(obj);
                             }
 
-                            $timeout(function(){
-                                onDropCallback(scope, {$data: obj.data, $event: obj, $target: scope.$eval(scope.value)});
-                            });
+                            onDropCallback(scope, {$data: obj.data, $event: obj, $target: scope.$eval(scope.value)});
+
                         }
                         $timeout(function(){
                             onDragStopCallback(scope, {$data: obj.data, $event: obj});
