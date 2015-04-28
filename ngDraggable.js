@@ -179,16 +179,15 @@ angular.module("ngDraggable", [])
                     var onmove = function (evt) {
                         if (!_dragEnabled)return;
                         evt.preventDefault();
-
-                        _mx = ngDraggable.inputEvent(evt).pageX;//ngDraggable.getEventProp(evt, 'pageX');
-                        _my = ngDraggable.inputEvent(evt).pageY;//ngDraggable.getEventProp(evt, 'pageY');
+                        _mx = ngDraggable.inputEvent(evt).pageX - 35;//ngDraggable.getEventProp(evt, 'pageX');
+                        _my = ngDraggable.inputEvent(evt).pageY - 70;//ngDraggable.getEventProp(evt, 'pageY');
 
                         if (_centerAnchor) {
                             _tx = _mx - element.centerX - _dragOffset.left;
                             _ty = _my - element.centerY - _dragOffset.top;
                         } else {
-                            _tx = _mx - _mrx - _dragOffset.left;
-                            _ty = _my - _mry - _dragOffset.top;
+                            _tx = _mx - document.body.scrollLeft;
+                           _ty = _my - document.body.scrollTop;
                         }
 
                         moveElement(_tx, _ty);
